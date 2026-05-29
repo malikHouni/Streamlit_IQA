@@ -48,7 +48,7 @@ if not os.path.exists(DATA_FILE):
 @st.cache_data
 def load_and_mine():
     df = pd.read_csv(DATA_FILE)
-    df['time'] = pd.to_datetime(df['time']) # On convertit en format date, important!
+    df['time'] = pd.to_datetime(df['time'], unit='ms') # On convertit en format date (ms)
     df['target_aqi'] = (df['pm10'] * 0.5 + df['pm2_5'] * 1.5 + df['nitrogen_dioxide'] * 0.2)#calcul du target_aqi
     return df
 
