@@ -48,13 +48,13 @@ if not os.path.exists(DATA_FILE):
 @st.cache_data
 def load_and_mine():
     df = pd.read_csv(DATA_FILE)
-    df['time'] = pd.to_datetime(df['time'], unit='ms') # On convertit en format date (ms)
+    df['time'] = pd.to_datetime(df['time']) # On convertit en format date, important!
     df['target_aqi'] = (df['pm10'] * 0.5 + df['pm2_5'] * 1.5 + df['nitrogen_dioxide'] * 0.2)#calcul du target_aqi
     return df
 
 df = load_and_mine()
 
-# Entraînement du modèle de Linear Regression simple 
+# Entraînement du modèle avec simple regression linéaire 
 @st.cache_resource
 def train_professional_model(data):
     X = data[['temperature_2m', 'relative_humidity_2m', 'wind_speed_10m']].values
@@ -66,10 +66,16 @@ def train_professional_model(data):
 model = train_professional_model(df)
 
 # --- TABS SELECTION ---
-tab1, tab2 = st.tabs(["Analyse Historique", "Prédiction en Direct"])
+tab1, tab2, tab3 = st.tabs(["Analyse Historique", "Prédiction en Direct", "about"])
 
 with tab1:
-    # LA SAISONNALITÉ
+    st.subheader("Extrait de nos données")
+    if st.checkbox("Afficher un extrait (10 lignes au hasard)"):
+        st.dataframe(df.sample(min(10, len(df))))
+
+    st.divider()
+
+    # SAISONNALITÉ
     st.subheader("Analyse Saisonnière")
     st.write("Moyenne de l'AQI par mois (2022-2026)")
     df['mois'] = df['time'].dt.month
@@ -81,7 +87,7 @@ with tab1:
     st.subheader("Évolution Temporelle")
     st.write("Aperçu des 500 derniers relevés (AQI vs Température)")
     chart_data = df.tail(500)
-    st.line_chart(chart_data.set_index('time')[['target_aqi', 'temperature_2m']])
+    st.line_chart(chart_data[['target_aqi', 'temperature_2m']])
 
     st.divider()
     st.subheader("Analyse de Corrélation")
@@ -114,7 +120,7 @@ with tab2:
         
         st.metric("AQI Prédit", f"{pred:.1f}")
         
-        # Interpretation simplifié 
+        # Interpretation simplifié de la qualité de l'air
         if pred < 50:
             st.success("L'air est sain. Idéal pour les activités extérieures.")
         elif pred < 100:
@@ -122,7 +128,21 @@ with tab2:
         elif pred < 150:
             st.warning("Qualité dégradée. Les personnes sensibles, attention!")
         else:
-            st.error("Mauvaise qualité de l'air ! Évitez les sorties.")
+            st.error("Mauvaise qualité de l'air ! Évitez de sortir.")
+
+with tab3:
+    st.subheader("À propos de ce projet")
+    st.write("""
+    Cette application est une base pour identifier et prédire la qualité de l'air.
+    
+    ### La méthodologie
+    1. **La collecte** : Données historiques horaires (2022-2026).
+    2. **Le calcul** : Calcul de l'indice AQI basé sur les PM10, PM2.5 et le NO2.
+    3. **La modélisation** : Régression Linéaire pour prédire l'AQI.
+    
+    ### Auteur
+    Développé par Malik HOUNI dans le cadre du module Data Mining avec Progress Factory.
+    """)
 
 # Guide d'interprétation de l'indice de qualité de l'air
 with st.sidebar:
@@ -144,4 +164,4 @@ with st.sidebar:
     Alerte santé !
     """)
     st.divider()
-    st.caption("par Malik HOUNI")
+    st.caption("par Malik HOUNI - 2026")
