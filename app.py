@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 DATA_FILE = os.path.join(os.path.dirname(__file__), "lyon_full_history.csv")
 
-st.set_page_config(page_title="Lyon ML Miner", page_icon=None, layout="wide")
+st.set_page_config(page_title="AQI Lyon", page_icon=None, layout="wide")
 
 # --- Custom Style, for blue panel color  ---
 st.markdown("""
@@ -94,10 +94,10 @@ with tab1:
     st.write("Relation entre la Vitesse du Vent et la Pollution")
     
     fig, ax = plt.subplots(figsize=(10, 6))
-    ax.scatter(df['wind_speed_10m'], df['target_aqi'], alpha=0.3, color='#26619C')
+    ax.scatter(df['wind_speed_10m'], df['target_aqi'], alpha=0.3, color='#fab1a0')
     ax.set_xlabel("Vitesse du Vent (km/h)")
     ax.set_ylabel("AQI")
-    ax.set_title("Impact du Vent sur la Qualité de l'Air")
+    ax.set_title("Impact du Vent sur la qualité de l'air")
     ax.grid(True, linestyle='--', alpha=0.7)
     
     st.pyplot(fig)
