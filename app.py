@@ -136,7 +136,7 @@ with tab3:
     Cette application est une base pour identifier et prédire la qualité de l'air.
     
     ### La méthodologie
-    1. **La collecte** : Données historiques horaires (2022-2026).
+    1. **La collecte** : Données historiques sur https://open-meteo.com/ (2022-2026).
     2. **Le calcul** : Calcul de l'indice AQI basé sur les PM10, PM2.5 et le NO2.
     3. **La modélisation** : Régression Linéaire pour prédire l'AQI.
     
