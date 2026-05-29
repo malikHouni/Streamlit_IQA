@@ -110,9 +110,9 @@ with tab2:
     col1, col2 = st.columns([1, 1])
     
     with col1:
-        t = st.slider("Température (°C)", -10, 40, 20)
-        h = st.slider("Humidité (%)", 0, 100, 50)
-        w = st.slider("Vent (km/h)", 0, 100, 15)
+        t = st.slider("Température (°C)", -10, 800, 20)
+        h = st.slider("Humidité (%)", 0, 200, 50)
+        w = st.slider("Vent (km/h)", 0, 200, 15)
         
     with col2:
         pred = model.predict([[t, h, w]])[0]
