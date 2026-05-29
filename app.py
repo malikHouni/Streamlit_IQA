@@ -66,7 +66,7 @@ def train_professional_model(data):
 model = train_professional_model(df)
 
 # --- TABS SELECTION ---
-tab1, tab2, tab3 = st.tabs(["Analyse Historique", "Prédiction en Direct", "about"])
+tab1, tab2, tab3 = st.tabs(["Analyse", "Prédiction", "about"])
 
 with tab1:
     st.subheader("Extrait de nos données")
