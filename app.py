@@ -86,7 +86,7 @@ with tab1:
     st.divider()
     st.subheader("Évolution Temporelle")
     st.write("Aperçu des 500 derniers relevés (AQI vs Température)")
-    chart_data = df.tail(500)
+    chart_data = df.tail(500).set_index('time')
     st.line_chart(chart_data[['target_aqi', 'temperature_2m']])
 
     st.divider()
