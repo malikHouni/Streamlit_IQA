@@ -94,7 +94,7 @@ with tab1:
     st.write("Relation entre la Vitesse du Vent et la Pollution")
     
     fig, ax = plt.subplots(figsize=(10, 6))
-    ax.scatter(df['wind_speed_10m'], df['target_aqi'], alpha=0.3, color='#fab1a0')
+    ax.scatter(df['wind_speed_10m'], df['target_aqi'], alpha=0.3, color='#0984e3')
     ax.set_xlabel("Vitesse du Vent (km/h)")
     ax.set_ylabel("AQI")
     ax.set_title("Impact du Vent sur la qualité de l'air")
